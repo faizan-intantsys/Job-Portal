@@ -1,0 +1,171 @@
+/* Footer Container */
+.footer {
+    background-color: #f1f1f1;
+    padding: 40px 20px;
+  }
+  
+  .footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 40px;
+  }
+  
+  /* Left Section - Footer Brand */
+  .footer-brand {
+    flex: 1;
+    max-width: 300px;
+    display: flex;
+    align-items: center; /* Vertically center the logo and text */
+    gap: 15px;
+  }
+  
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;    
+  }
+  
+  .footer-logo img {
+    width: 70px; /* Decreased size of the logo */
+    height: auto;
+  }
+  
+  .footer-logo h2 {
+    font-size: 24px;
+    margin: 0; /* Remove extra margin */
+    margin-left: 10px;
+    font-weight: bold;
+  }
+  
+  .footer p {
+    margin-top: 1px;
+    color: #555;
+  }
+  
+  .social-icons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .social-icon i {
+    font-size: 20px;
+    color: #333;
+    transition: color 0.3s ease;
+  }
+  
+  .social-icon i:hover {
+    color: #2979ff; /* Hover effect on social icons */
+  }
+  
+  /* Links Section */
+  .footer-links {
+    flex: 2;
+    display: flex;
+    gap: 40px;
+  }
+  
+  .footer-links div {
+    width: 25%; /* Adjusted width for better responsiveness */
+  }
+  
+  .footer-links h4 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .footer-links ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .footer-links li a {
+    text-decoration: none;
+    color: #333;
+    transition: color 0.3s ease;
+  }
+  
+  .footer-links li a:hover {
+    color: #2979ff; /* Hover effect on links */
+  }
+  
+  /* App Download Section */
+  .footer-app {
+    flex: 1;
+    max-width: 300px;
+  }
+  
+  .app-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+  }
+  
+  .app-store img{
+    width: 120px;
+  }
+  .play-store img {
+    margin-top: -12px;
+    width: 120px; /* Adjust as per your design */
+  }
+  
+  /* Footer Bottom */
+  .footer-bottom {
+    margin-top: 20px;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .footer-bottom-links {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+  }
+  
+  .footer-bottom-links li {
+    margin: 0 10px;
+  }
+  
+  .footer-bottom-links a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .footer-bottom-links a:hover {
+    color: #2979ff; /* Hover effect on footer links */
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .footer-container {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .footer-links {
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+      width: 100%;
+    }
+  
+    .footer-links div {
+      width: auto; /* Allow the columns to be more flexible */
+    }
+  
+    .footer-app {
+      margin-top: 20px;
+      text-align: center;
+    }
+  
+    .app-buttons {
+      justify-content: center;
+    }
+  }
+
+  

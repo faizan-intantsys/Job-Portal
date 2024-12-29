@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Header from "../Home Components/Header";
 
 function AdminDashboard() {
   const [candidates, setCandidates] = useState([]);
@@ -18,6 +19,8 @@ function AdminDashboard() {
   }, []);
 
   return (
+    <>
+    <Header/>
     <div>
       <h2>Admin Dashboard</h2>
       <table>
@@ -45,6 +48,7 @@ function AdminDashboard() {
         </tbody>
       </table>
     </div>
+    </>
   );
 }
 
