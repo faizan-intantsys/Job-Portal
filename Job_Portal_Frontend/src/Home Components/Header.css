@@ -1,0 +1,140 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #e8eaf6; /* Set your preferred background color */
+  margin: 0;
+}
+
+/* Fix the header to the top */
+.header {
+  width: 100%;
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+  position: fixed; /* Fix it to the top */
+  top: 0;
+  left: 0;
+  z-index: 1000; /* Ensure it stays above other elements */
+}
+
+/* Ensure content below header doesn't overlap */
+.header + * {
+  margin-top: 100px; /* Adjust to the header's height */
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  gap: 20px;
+}
+
+/* Adjust spacing for the logo and heading */
+.header-left {
+  display: flex;
+  align-items: center; /* Vertically center the items */
+  gap: 10px; /* Adjust spacing between logo and text */
+}
+
+.header-left h2 {
+  margin: 0; /* Remove any default margin */
+  font-size: 1.5rem; /* Adjust size as needed */
+  font-weight: bold; /* Optional: Make it stand out */
+}
+
+.logo {
+  width: 50px;
+  height: auto;
+}
+
+.nav {
+  display: flex;
+  gap: 15px; /* Reduce the gap between navigation links */
+  margin-left: 20px; /* Add this to control spacing from "Job Hunt" */
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #000;
+  font-size: large;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.nav-link.active {
+  background-color: #c9d3fa;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.nav-link:hover {
+  color: #00754a;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.find-store {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #000;
+  font-size: 14px;
+}
+span{
+  font-size: large;
+  font-weight: bold;
+}
+
+.btn {
+  border: none;
+  padding: 10px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.sign-in {
+  text-decoration: none;
+  background-color: #c9d3fa;
+  border: 1px solid #000;
+  color: black;
+}
+
+.join-now {
+  text-decoration: none;
+  background-color: #000;
+  color: #fff;
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header-top {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .nav {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .header-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}

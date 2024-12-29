@@ -1,6 +1,7 @@
 // Import dependencies
 const express = require('express');
 const multer = require('multer');
+// const mysql = require('mysql');
 const mysql = require('mysql2');
 const cors = require('cors');
 const path = require('path');
@@ -15,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 const db = mysql.createConnection({
   host: '127.0.0.1',
   user: 'root',
-  password: 'Faizan@123',
+  password: 'aquib123',
   database: 'job_portal',
 });
 
@@ -25,23 +26,31 @@ db.connect((err) => {
   console.log('Connected to MySQL database.');
 });
 
-// Configure multer for file uploads
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads/'); // Directory to store uploaded files
-  },
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}_${file.originalname}`);
-  },
-});
-const upload = multer({ storage });
+// // Configure multer for file uploads
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, 'uploads/'); // Directory to store uploaded files
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, `${Date.now()}_${file.originalname}`);
+//   },
+// });
+// const upload = multer({ storage });
 
 // API Routes
 // Candidate Registration
+app.get('/',(req,res) => {
+  res.send("My server is running at port 5000!");
+});
+
+app.get('/myurl',(req,res) => {
+  res.send("This is my url!")
+})
 app.post('/register', (req, res) => {
   const { name, email, password } = req.body;
-  const sql = 'INSERT INTO candidates (name, email, password) VALUES (?, ?, ?)';
+  const sql = 'INSERT INTO user (name, email, password) VALUES (?, ?, ?)';
   db.query(sql, [name, email, password], (err, result) => {
+    console.log(result);
     if (err) return res.status(500).send(err);
     res.status(200).send('Candidate registered successfully');
   });
@@ -50,7 +59,7 @@ app.post('/register', (req, res) => {
 // Candidate Login
 app.post('/login', (req, res) => {
   const { email, password } = req.body;
-  const sql = 'SELECT * FROM candidates WHERE email = ? AND password = ?';
+  const sql = 'SELECT * FROM user WHERE email = ? AND password = ?';
   db.query(sql, [email, password], (err, results) => {
     if (err) return res.status(500).send(err);
     if (results.length > 0) {
@@ -62,13 +71,44 @@ app.post('/login', (req, res) => {
 });
 
 // CV Upload
-app.post('/upload-cv', upload.single('cv'), (req, res) => {
-  const { candidateId } = req.body;
-  const cvPath = req.file.path;
-  const sql = 'UPDATE candidates SET cv_path = ? WHERE id = ?';
-  db.query(sql, [cvPath, candidateId], (err, result) => {
-    if (err) return res.status(500).send(err);
-    res.status(200).send('CV uploaded successfully');
+// Multer setup for file uploads
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/"); // Directory where files will be stored
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(null, `${uniqueSuffix}-${file.originalname}`);
+  },
+});
+
+const upload = multer({ storage });
+
+// Create the `uploads` directory if it doesn't exist
+const fs = require("fs");
+if (!fs.existsSync("uploads")) {
+  fs.mkdirSync("uploads");
+}
+
+// API endpoint for CV upload
+app.post("/upload-cv", upload.single("cv"), (req, res) => {
+  const { name, email, number } = req.body;
+
+  // Validate input
+  if (!name || !email || !number || !req.file) {
+    return res.status(400).json({ error: "All fields are required!" });
+  }
+
+  // Save form data and file path to the database
+  const sql = `INSERT INTO candidates (name, email, phone, cv_path) VALUES (?, ?, ?, ?)`;
+  const values = [name, email, number, req.file.path];
+
+  db.query(sql, values, (err, result) => {
+    if (err) {
+      console.error("Error saving data:", err);
+      return res.status(500).json({ error: "Failed to save data" });
+    }
+    res.status(200).json({ message: "CV uploaded successfully", candidateId: result.insertId });
   });
 });
 
