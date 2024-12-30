@@ -150,7 +150,7 @@ app.get('/admin/candidates', (req, res) => {
   const sql = 'SELECT * FROM candidates';
   db.query(sql, (err, results) => {
     if (err) return res.status(500).send(err);
-    res.status(200).json(results);
+    res.status(200).json({results});
   });
 });
 
@@ -168,6 +168,19 @@ app.get('/admin/export', (req, res) => {
     res.attachment('candidates.csv');
     res.send(csv);
   });
+});
+
+app.post('/admin', (req,res) => {
+  const {email, password} = req.body;
+  console.log(email);
+  console.log(password);
+  if(email === 'admin@jobs' && password === 'admin'){
+  console.log("Success");
+
+  res.status(200).json({message: 'success'});
+  }else{
+    res.status(404).json({message: 'Invalid User'})
+  }
 });
 
 // Static files for uploaded CVs

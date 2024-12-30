@@ -50,6 +50,7 @@ const Header = () => {
             <span>Headquarter</span>
           </div>
           <Link to="/login" className="btn sign-in">Sign in</Link>
+          <Link to="/adminlogin" className="btn sign-in">Admin Sign in</Link>
           <Link to="/register" className="btn join-now">Join now</Link>
         </div>
       </div>
