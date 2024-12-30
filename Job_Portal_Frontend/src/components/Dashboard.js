@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Header from "../Home Components/Header";
+import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
   const [formData, setFormData] = useState({
@@ -9,6 +10,20 @@ function Dashboard() {
     number: "",
     file: null,
   });
+  const [userId, setUserId] = useState(null);
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
+
+  // Extract user ID from token on component mount
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    if (token) {
+      const decodedToken = JSON.parse(atob(token.split(".")[1])); // Decode JWT payload
+      setUserId(decodedToken.id);
+    } else {
+      navigate("/login");
+    }
+  }, []);
 
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
@@ -20,18 +35,29 @@ function Dashboard() {
 
   const handleUpload = async (e) => {
     e.preventDefault();
+    if (!formData.file || !formData.name || !formData.email || !formData.number) {
+      setMessage("All fields are required.");
+      return;
+    }
+
     const uploadData = new FormData();
     uploadData.append("cv", formData.file);
-    uploadData.append("candidateId", 1); // Replace with dynamic user ID
+    uploadData.append("candidateId", userId); // Use dynamic user ID
     uploadData.append("name", formData.name);
     uploadData.append("email", formData.email);
     uploadData.append("number", formData.number);
 
     try {
-      const res = await axios.post("http://localhost:5000/upload-cv", uploadData);
-      alert(res.data);
+      const res = await axios.post("http://localhost:5000/upload-cv", uploadData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`, // Add token for authentication
+        },
+      });
+      setMessage(res.data.message || "CV uploaded successfully.");
+      setFormData({ name: "", email: "", number: "", file: null }); // Reset form
     } catch (err) {
-      alert("CV upload failed");
+      console.error(err);
+      setMessage("CV upload failed. Please try again.");
     }
   };
 
@@ -39,6 +65,7 @@ function Dashboard() {
     <div>
       <Header />
       <h2>Dashboard</h2>
+      {message && <p className="message">{message}</p>}
       <form onSubmit={handleUpload}>
         <div className="input-container">
           <input
@@ -70,12 +97,14 @@ function Dashboard() {
             required
           />
         </div>
-        <input
-          type="file"
-          name="file"
-          onChange={handleChange}
-          required
-        />
+        <div className="input-container">
+          <input
+            type="file"
+            name="file"
+            onChange={handleChange}
+            required
+          />
+        </div>
         <button type="submit">Upload CV</button>
       </form>
     </div>

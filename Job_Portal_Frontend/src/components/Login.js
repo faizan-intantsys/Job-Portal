@@ -22,17 +22,25 @@ function Login() {
     e.preventDefault();
     try {
       const res = await axios.post("http://localhost:5000/login", credentials);
-      alert(res.data.message);
-
+      const { message, token } = res.data;
+  
+      alert(message);
+  
       // Store authentication token
-      // localStorage.setItem("authToken", res.data.token);
-
-      // Redirect to dashboard
-      navigate("/dashboard");
+      if (token) {
+        localStorage.setItem("authToken", token);
+  
+        // Redirect to dashboard
+        navigate("/dashboard");
+      } else {
+        throw new Error("Token not received");
+      }
     } catch (err) {
-      alert("Login failed");
+      console.error("Login error:", err);
+      alert("Login failed. Please check your credentials and try again.");
     }
   };
+  
 
   return (
     <>

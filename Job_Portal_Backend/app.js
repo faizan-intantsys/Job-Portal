@@ -6,36 +6,33 @@ const mysql = require('mysql2');
 const cors = require('cors');
 const path = require('path');
 const app = express();
+const dotenv = require('dotenv');
+const jwt = require('jsonwebtoken');
+const bodyParser = require('body-parser');
+
+dotenv.config();
 
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Configure database connection
 const db = mysql.createConnection({
-  host: '127.0.0.1',
-  user: 'root',
-  password: 'aquib123',
-  database: 'job_portal',
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
 });
+
+const SECRET_KEY = process.env.SECRET_KEY;
 
 // Connect to the database
 db.connect((err) => {
   if (err) throw err;
   console.log('Connected to MySQL database.');
 });
-
-// // Configure multer for file uploads
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, 'uploads/'); // Directory to store uploaded files
-//   },
-//   filename: (req, file, cb) => {
-//     cb(null, `${Date.now()}_${file.originalname}`);
-//   },
-// });
-// const upload = multer({ storage });
 
 // API Routes
 // Candidate Registration
@@ -57,16 +54,52 @@ app.post('/register', (req, res) => {
 });
 
 // Candidate Login
+// app.post('/login', (req, res) => {
+//   const { email, password } = req.body;
+//   const sql = 'SELECT * FROM user WHERE email = ? AND password = ?';
+//   db.query(sql, [email, password], (err, results) => {
+//     if (err) return res.status(500).send(err);
+//     if (results.length > 0) {
+//       res.status(200).json({ message: 'Login successful', user: results[0] });
+//     } else {
+//       res.status(401).send('Invalid email or password');
+//     }
+//   });
+// });
+
 app.post('/login', (req, res) => {
   const { email, password } = req.body;
   const sql = 'SELECT * FROM user WHERE email = ? AND password = ?';
-  db.query(sql, [email, password], (err, results) => {
-    if (err) return res.status(500).send(err);
-    if (results.length > 0) {
-      res.status(200).json({ message: 'Login successful', user: results[0] });
-    } else {
-      res.status(401).send('Invalid email or password');
-    }
+  db.query(sql, [email, password], (err, result) => {
+          if (err) return res.status(500).send(err);
+          if (result.length === 0) return res.status(404).send({ message: 'User not found' });
+
+          console.log(result);
+          const user = result[0];
+          console.log(user);
+          // const isPasswordValid = bcrypt.compare(password, user.password);
+
+          // if (!isPasswordValid)
+          //     return res.status(401).send({ message: 'Invalid credentials' });
+
+          const token = jwt.sign({ id: user.id, username: user.username }, SECRET_KEY, {
+              expiresIn: '1h',
+          });
+
+          // res.send({ token });
+          res.status(200).json({ message: 'Login Successful', token }); 
+      }
+  );
+});
+
+app.get('/dashboard', (req, res) => {
+  const token = req.headers.authorization?.split(' ')[1];
+  if (!token) return res.status(401).send({ message: 'Token required' });
+
+  jwt.verify(token, SECRET_KEY, (err, decoded) => {
+      if (err) return res.status(403).send({ message: 'Invalid token' });
+
+      res.send({ message: 'Welcome to the protected route!', user: decoded });
   });
 });
 
