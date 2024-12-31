@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Header from "../Home Components/Header";
+import Header2 from "../Home Components/Header2";
 import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
@@ -23,7 +23,7 @@ function Dashboard() {
     } else {
       navigate("/login");
     }
-  }, []);
+  }, [navigate]);
 
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
@@ -61,9 +61,10 @@ function Dashboard() {
     }
   };
 
+
   return (
     <div>
-      <Header />
+      <Header2 />
       <h2>Dashboard</h2>
       {message && <p className="message">{message}</p>}
       <form onSubmit={handleUpload}>

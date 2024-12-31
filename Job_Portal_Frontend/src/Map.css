@@ -1,0 +1,9 @@
+.map-container {
+    position: relative;
+    height: 85vh; /* Full-screen height */
+    width: 98vw; /* Full-screen width */
+    overflow: hidden;
+    margin-top: 88px;
+  }
+  
+  

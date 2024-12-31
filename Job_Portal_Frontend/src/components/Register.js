@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "../Home Components/Header";
 import "./Register.css";
 
@@ -72,6 +72,7 @@ function Register() {
             />
           </div>
           <button type="submit">Register</button>
+          <Link to="/login" className='abc'>Already a user ?</Link>
         </form>
       </div>
     </>

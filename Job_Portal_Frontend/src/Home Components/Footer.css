@@ -29,6 +29,7 @@
   .footer-logo img {
     width: 70px; /* Decreased size of the logo */
     height: auto;
+    border-radius: 10px;
   }
   
   .footer-logo h2 {

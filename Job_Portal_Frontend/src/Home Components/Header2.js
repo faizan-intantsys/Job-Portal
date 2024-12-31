@@ -1,13 +1,20 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom'; // Import useLocation
+import { Link, useLocation, useNavigate } from 'react-router-dom'; // Import useLocation
 import './Header.css';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 
 const Header = () => {
   const location = useLocation(); // Get the current location
+  const navigate = useNavigate();
 
   // Helper function to determine active link
   const isActive = (path) => location.pathname === path;
+
+    // Logout function
+    const handleLogout = () => {
+        localStorage.removeItem("authToken"); // Remove auth token from local storage
+        navigate("/login"); // Redirect to login page
+      };
 
   return (
     <header className="header">
@@ -47,11 +54,9 @@ const Header = () => {
         <div className="header-actions">
           <div className="find-store">
             <FaMapMarkerAlt />
-            <Link to="/map" className='hq'>Headquarter</Link>
+            <span>Headquarter</span>
           </div>
-          <Link to="/login" className="btn sign-in">Sign in</Link>
-          <Link to="/adminlogin" className="btn sign-in">Admin Sign in</Link>
-          <Link to="/register" className="btn join-now">Join now</Link>
+          <Link to="/login" className="btn join-now" onClick={handleLogout}>Logout</Link>
         </div>
       </div>
     </header>

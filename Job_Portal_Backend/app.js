@@ -150,9 +150,10 @@ app.get('/admin/candidates', (req, res) => {
   const sql = 'SELECT * FROM candidates';
   db.query(sql, (err, results) => {
     if (err) return res.status(500).send(err);
-    res.status(200).json({results});
+    console.log("Candidates from database:", results); // Log the results
+    res.status(200).json(results); // Send results as an array of candidates
   });
-});
+}); 
 
 // Admin - Export Data
 app.get('/admin/export', (req, res) => {
@@ -187,7 +188,7 @@ app.post('/admin', (req,res) => {
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Start server
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

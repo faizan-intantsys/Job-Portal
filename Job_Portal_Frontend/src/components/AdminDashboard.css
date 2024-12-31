@@ -1,59 +1,82 @@
 /* AdminDashboard.css */
 
 .dashboard-container {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    padding: 20px;
-  }
-  
-  .dashboard-content {
-    max-width: 900px;
-    margin: 0 auto;
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .dashboard-title {
-    text-align: center;
-    font-size: 24px;
-    color: #333;
-    margin-bottom: 20px;
-  }
-  
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  padding: 20px;
+}
+
+.dashboard-content {
+  max-width: 900px;
+  margin: 0 auto;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-title {
+  text-align: center;
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.candidates-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  background: #f8f9fc; /* Light background for the table */
+  border-radius: 8px;
+  overflow: hidden; /* Ensure rounded corners are applied */
+}
+
+.candidates-table th,
+.candidates-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+  font-size: 16px;
+}
+
+.candidates-table th {
+  background-color: #4CAF50; /* Green background for header */
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.candidates-table tr:nth-child(even) {
+  background-color: #f1f5f9; /* Light grey color for even rows */
+}
+
+.candidates-table tr:nth-child(odd) {
+  background-color: #ffffff; /* White color for odd rows */
+}
+
+.candidates-table tr:hover {
+  background-color: #e2e8f0; /* Light blue when hovering over rows */
+}
+
+.cv-link {
+  color: #4CAF50; /* Green color for CV links */
+  text-decoration: none;
+}
+
+.cv-link:hover {
+  color: #2E8B57; /* Darker green on hover */
+  text-decoration: underline;
+}
+
+/* Make the table more responsive for small screens */
+@media (max-width: 768px) {
   .candidates-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
+    font-size: 14px;
+    margin-top: 15px;
   }
-  
-  .candidates-table th,
-  .candidates-table td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: left;
+
+  .candidates-table th, .candidates-table td {
+    padding: 8px;
   }
-  
-  .candidates-table th {
-    background-color: #c9d3fa;
-    color: white;
-  }
-  
-  .candidates-table tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-  
-  .candidates-table tr:hover {
-    background-color: #f1f1f1;
-  }
-  
-  .cv-link {
-    color: #c9d3fa;
-    text-decoration: none;
-  }
-  
-  .cv-link:hover {
-    text-decoration: underline;
-  }
-  
+}

@@ -10,7 +10,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(135deg, #2e8b57, #a8dadc);;
+    background: linear-gradient(135deg, #1d3557, #457b9d);
   }
   
   /* Styling for the container around the form */
@@ -24,6 +24,7 @@ body {
   
   /* Form styling: vertical rectangular box */
   .register-form {
+    background: linear-gradient(135deg, #1d3557, #457b9d);
     background-color: #fff;
     padding: 40px;
     border-radius: 12px;
@@ -37,7 +38,7 @@ body {
   /* Title styling */
   h2 {
     text-align: center;
-    color: #4e5a77;
+    color: black;
     font-size: 28px;
     font-weight: 600;
     margin-bottom: 30px;
@@ -73,7 +74,7 @@ body {
   button {
     width: auto; /* Use auto width for a more compact button */
     padding: 10px 18px; /* Smaller padding for a more formal, compact look */
-    background-color: #4c5c8f;
+    background-color: #03196187;
     color: #fff;
     border: none;
     border-radius: 8px;
@@ -100,7 +101,22 @@ body {
   .register-form {
     animation: formEntry 0.8s ease-out;
   }
+
+  .abc {
+    display: inline-block;
+    margin-top: 15px;
+    font-size: 14px;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+  }
   
+  .abc:hover {
+    color: lightgreen;
+    text-decoration: underline;
+  }
+
   @keyframes formEntry {
     0% {
       transform: translateY(-50px);

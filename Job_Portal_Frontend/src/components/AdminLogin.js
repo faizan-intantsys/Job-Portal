@@ -22,9 +22,9 @@ function Login() {
     e.preventDefault();
     try {
       const res = await axios.post("http://localhost:5000/admin", credentials);
-      const message  = res.data;
+      // const message  = res.data;
   
-      alert(message);
+      alert("Admin Login Successful!");
       navigate("/admin");
     } catch (err) {
       console.error("Login error:", err);
